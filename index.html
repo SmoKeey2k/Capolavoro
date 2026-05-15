@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Intelligenza Artificiale: Il Futuro Oggi - Matteo G. Guarneri</title>
+    <style>
+        :root {
+            --primary-color: #9cc738;
+            --secondary-color: #93b908;
+            --text-color: #212529;
+            --bg-color: #ffffff;
+            --accent-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #1e1e1e;
+            --card-bg: #2d2d2d;
+            --primary-color: #a4d431;
+            --border-color: #444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* BARRA DI PROGRESSIONE LETTURA */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--secondary-color);
+            width: 0%;
+            z-index: 2000;
+            transition: width 0.1s ease;
+        }
+
+        /* HEADER PERFETTAMENTE CENTRATO */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 10px 0;
+            text-align: center !important;
+        }
+
+        nav {
+            background: var(--accent-color);
+            padding: 1rem;
+            position: sticky;
+            top: 5px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover {
+            background: rgba(147, 185, 8, 0.2);
+        }
+
+        .controls-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .theme-toggle, .audio-toggle {
+            cursor: pointer;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle:hover, .audio-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        section:target {
+            background-color: rgba(147, 185, 8, 0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 1.5rem;
+        }
+
+        /* INTERFACCIA LABORATORIO: RETE NEURALE AVANZATA */
+        .network-simulator {
+            background: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .network-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            min-height: 220px;
+        }
+
+        .network-layer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .neuron {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #bbb;
+            display: inline-block;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(0,0,0,0.1);
+        }
+
+        .neuron.active {
+            background-color: var(--secondary-color);
+            box-shadow: 0 0 20px var(--secondary-color);
+            transform: scale(1.15);
+        }
+
+        .highlight-box {
+            background-color: var(--accent-color);
+            border-left: 6px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* SELETTORE DI IMPATTO */
+        .impact-calculator {
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <header>
+        <h1>L'Intelligenza Artificiale</h1>
+        <p>Progetto per l'Esame di Stato - Matteo Giorgio Guarneri</p>
+        <div class="controls-container">
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambia contrasto pagina">Inverti Colori</button>
+            <button class="audio-toggle" onclick="toggleSpeech()" aria-label="Ascolta il testo della pagina">🔊 Leggi Pagina</button>
+        </div>
+    </header>
+
+    <nav aria-label="Menu principale">
+        <a href="#introduzione">Cos'è</a>
+        <a href="#storia">Evoluzione</a>
+        <a href="#laboratorio">Laboratorio</a>
+        <a href="#benefici">Benefici</a>
+        <a href="#rischi">Rischi</a>
+        <a href="#impatto">Calcola Impatto</a>
+    </nav>
+
+    <main>
+        <!-- Introduzione -->
+        <section id="introduzione">
+            <h2>Cos'è l'Intelligenza Artificiale?</h2>
+            <p>L'Intelligenza Artificiale non è un concept nato recentemente, ma una disciplina informatica che affonda le sue radici nella metà del secolo scorso. Essa studia la realizzazione di sistemi capaci di simulare processi cognitivi umani, come l'apprendimento, il ragionamento e la pianificazione. Oggi non parliamo più di semplici calcolatori, ma di sistemi basati sul Machine Learning e sulle reti neurali, in grado di imparare autonomamente dai dati e di interagire con il mondo circostante in modo sempre più naturale.</p>
+        </section>
+
+        <!-- Evoluzione -->
+        <section id="storia">
+            <h2>L'Evoluzione Storica</h2>
+            <p>Il percorso dell'IA inizia simbolicamente nel 1950 con Alan Turing, il quale propose l'omonimo test per determinare se una macchina potesse essere definita intelligente. Dopo decenni di fasi alterne, note come "inverni dell'IA", la disciplina ha subito un'accelerazione esponenziale grazie alla disponibilità dei Big Data e all'aumento della potenza di calcolo. Dalle storiche vittorie nei giochi complessi come gli scacchi e il Go, siamo giunti all'era dell'IA Generativa, capace di creare testi, musica e immagini, trasformando radicalmente il nostro modo di produrre e consumare contenuti digitali.</p>
+        </section>
+
+        <!-- Laboratorio Interattivo Avanzato -->
+        <section id="laboratorio">
+            <h2>Laboratorio Interattivo: Architettura di una Rete Neurale</h2>
+            <p>Questa simulazione rappresenta una rete neurale artificiale profonda (Deep Learning). Il sistema è composto da un <strong>Input Layer</strong> (che riceve i dati grezzi), un <strong>Hidden Layer</strong> (lo strato nascosto che elabora le caratteristiche e applica i pesi algoritmici) e un <strong>Output Layer</strong> (che genera la classificazione finale).</p>
+            
+            <div class="network-simulator">
+                <div style="display: flex; justify-content: space-around; font-weight: bold; margin-bottom: 15px; color: var(--primary-color);">
+                    <div>Input Layer</div>
+                    <div>Hidden Layer</div>
+                    <div>Output Layer</div>
+                </div>
+                
+                <div class="network-container">
+                    <!-- STRATO DI INPUT (3 Neuroni) -->
+                    <div class="network-layer">
+                        <span class="neuron input-n" id="in-1"></span>
+                        <span class="neuron input-n" id="in-2"></span>
+                        <span class="neuron input-n" id="in-3"></span>
+                    </div>
+                    
+                    <!-- STRATO NASCOSTO (4 Neuroni) -->
+                    <div class="network-layer">
+                        <span class="neuron hid-n" id="hid-1"></span>
+                        <span class="neuron hid-n" id="hid-2"></span>
+                        <span class="neuron hid-n" id="hid-3"></span>
+                        <span class="neuron hid-n" id="hid-4"></span>
+                    </div>
+                    
+                    <!-- STRATO DI OUTPUT (2 Neuroni) -->
+                    <div class="network-layer">
+                        <span class="neuron out-n" id="out-1"></span>
+                        <span class="neuron out-n" id="out-2"></span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <button class="theme-toggle" onclick="startPropagation()" style="background-color: var(--secondary-color); color: white; box-shadow: none;">Elabora Impulso (Forward)</button>
+                    <button class="theme-toggle" onclick="resetNetwork()" style="box-shadow: none;">Resetta Rete</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefici -->
+        <section id="benefici">
+            <h2>I Benefici: Un Potenziamento per l'Umanità</h2>
+            <p>L'integrazione dell'intelligenza artificiale nella società moderna agisce principalmente come un acceleratore del progresso umano in molteplici ambiti. In campo medico, l'IA sta rivoluzionando la prevenzione grazie alla capacità di analizzare dati diagnostici con estrema precisione, permettendo di individuare patologie gravi molto prima che diventino incurabili. Parallelamente, questa tecnologia si rivela un alleato indispensabile per la sostenibilità ambientale, ottimizzando le risorse energetiche e fornendo modelli predittivi per contrastare il cambiamento climatico.</p>
+            <p>Nel mondo del lavoro e dell'arte, l'IA funge da co-creatore: facilita la pulizia di vecchie tracce musicali, assiste nella scrittura di codice software e automatizza i compiti più ripetitivi. Infine, l'impatto sociale sull'inclusione è straordinario, poiché abbatte le barriere della disabilità attraverso sistemi di sintesi vocale e traduzione istantanea, rendendo il mondo digitale finalmente accessibile a tutti, indipendentemente dalle limitazioni sensoriali o motorie.</p>
+        </section>
+
+        <!-- Rischi e Legge -->
+        <section id="rischi">
+            <h2>I Rischi e la Necessità di una Regolamentazione</h2>
+            <p>Nonostante le straordinarie opportunità, l'evoluzione dell'IA solleva sfide etiche che non possono essere trascurate. Il rischio della disoccupazione tecnologica derivante dall'automazione impone una profonda riflessione sulla formazione professionale del futuro. Contemporaneamente, la diffusione dei Deepfake e della disinformazione generata artificialmente mette a dura prova la nostra capacità di distinguere il vero dal falso, minacciando la stabilità del dibattito pubblico e della privacy individuale.</p>
+            
+            <div class="highlight-box">
+                Un aspetto cruciale è rappresentato dai pregiudizi algoritmici: se i dati utilizzati per l'addestramento contengono bias umani, la macchina rischia di replicare e amplificare discriminazioni sociali.
+            </div>
+
+            <p>Per rispondere a queste preoccupazioni, l'Unione Europea ha introdotto l'AI Act, la prima legge al mondo che classifica i sistemi di intelligenza artificiale in base al livello di rischio. L'obiettivo è garantire un approccio antropocentrico, dove la tecnologia rimanga uno strumento sicuro, trasparente e sempre sotto il controllo umano, tutelando i diritti fondamentali dei cittadini senza frenare l'innovazione.</p>
+        </section>
+
+        <!-- Sezione Interattiva: Calcolo Impatto Professionale -->
+        <section id="impatto" class="impact-calculator">
+            <h2>Scenario Futuro: L'Impatto nel tuo Settore</h2>
+            <p>Seleziona un ambito per analizzare come l'Intelligenza Artificiale trasformerà questa specifica attività lavorativa o quotidiana nei prossimi anni:</p>
+            <select id="sector-select" onchange="showImpact()">
+                <option value="">-- Scegli un ambito --</option>
+                <option value="medicina">Medicina e Sanità</option>
+                <option value="musica">Musica e Produzione Artistica</option>
+                <option value="scuola">Istruzione e Studio</option>
+                <option value="ingegneria">Sviluppo Software e Ingegneria</option>
+            </select>
+            <div id="impact-result" style="margin-top:20px; font-weight:500; min-height: 50px;"></div>
+        </section>
+
+        <!-- Sezione Accessibilità -->
+        <section id="accessibilita">
+            <h2>Nota sull'Accessibilità</h2>
+            <p>Questo sito è stato sviluppato seguendo rigorosi criteri di accessibilità per garantire che ogni membro della commissione possa fruire dei contenuti. È stata implementata una gerarchia semantica corretta per gli screen reader, un contrasto cromatico elevato per facilitare la lettura e una modalità scura per ridurre l'affaticamento visivo, dimostrando come la tecnologia debba essere, prima di tutto, inclusiva.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Matteo Giorgio Guarneri - Classe 5AI<br>Esame di Stato 2025/2026</p>
+    </footer>
+
+    <script>
+        // 1. GESTIONE TEMA (DARK MODE)
+        function toggleTheme() {
+            const body = document.documentElement;
+            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        }
+
+        // 2. INDICATORE DI PROGRESSO DELLA LETTURA
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // 3. LOGICA DI PROPAGAZIONE DIRETTA (FEEDFORWARD SIMULATION)
+        function startPropagation() {
+            resetNetwork();
+
+            // Strato di Input
+            setTimeout(() => {
+                document.querySelectorAll('.input-n').forEach(n => n.classList.add('active'));
+            }, 100);
+
+            // Strato Nascosto (Hidden)
+            setTimeout(() => {
+                document.querySelectorAll('.hid-n').forEach(n => n.classList.add('active'));
+            }, 600);
+
+            // Strato di Output
+            setTimeout(() => {
+                document.getElementById('out-1').classList.add('active');
+            }, 1100);
+        }
+
+        function resetNetwork() {
+            document.querySelectorAll('.neuron').forEach(n => n.classList.remove('active'));
+        }
+
+        // 4. CALCOLATORE DI IMPATTO SIMULATO
+        function showImpact() {
+            const select = document.getElementById('sector-select').value;
+            const resultDiv = document.getElementById('impact-result');
+            
+            const scenari = {
+                medicina: "🔴 Impatto Alto: L'IA automatizzerà lo screening radiologico primario. Il medico umano passerà da analista a supervisore decisionale terapeutico.",
+                musica: "🟡 Impatto Medio: Generazione di pattern ritmici e mixaggio automatizzato. L'artista si concentrerà esclusivamente sull'idea concettuale e sulla performance live.",
+                scuola: "🟢 Impatto Personalizzato: Tutor virtuali attivi 24/7 adatteranno le spiegazioni sullo stile di apprendimento del singolo studente, potenziando la didattica tradizionale.",
+                ingegneria: "🔴 Impatto Elevato: La scrittura del codice standard sarà delegata a modelli generativi avanzati. L'informatico diventerà un architetto di sistemi e controllore di sicurezza etica."
+            };
+            
+            resultDiv.innerHTML = select ? scenari[select] : "";
+        }
+
+        // 5. ACCESSIBILITÀ AVANZATA: SINTESI VOCALE
+        let synth = window.speechSynthesis;
+        let speaking = false;
+        let utterance;
+
+        function toggleSpeech() {
+            if (speaking) {
+                synth.cancel();
+                speaking = false;
+                document.querySelector('.audio-toggle').innerText = "🔊 Leggi Pagina";
+            } else {
+                const textToRead = document.querySelector('main').innerText;
+                utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'it-IT';
+                utterance.onend = () => {
+                    speaking = false;
+                    document.querySelector('.audio-toggle').innerText = "🔊 Leggi Pagina";
+                };
+                synth.speak(utterance);
+                speaking = true;
+                document.querySelector('.audio-toggle').innerText = "🛑 Ferma Lettura";
+            }
+        }
+    </script>
+</body>
+</html>
